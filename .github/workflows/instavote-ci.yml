@@ -55,7 +55,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ${{ inputs.sparse_checkout_directories }}
           push: true
           tags: |
             ${{ secrets.registry_username }}/${{ inputs.image_name }}:${{ github.ref_name }}-${{ inputs.image_tag }}-${{ steps.timestamp.outputs.timestamp }}
