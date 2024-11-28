@@ -1,0 +1,22 @@
+name: Vote CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: 'Git branch/tag to build'
+        required: true
+        default: 'main'
+        type: string
+
+jobs:
+  vote-ci:
+    uses: ./.github/workflows/instavote-ci.yml
+    with:
+      revision: ${{ inputs.revision }}
+      sparse_checkout_directories: '/vote/'
+      image_name: 'vote'
+      image_tag: ${{ github.sha }}
+    secrets:
+      registry_username: ${{ secrets.DOCKER_USERNAME }}
+      registry_password: ${{ secrets.DOCKER_PASSWORD }}

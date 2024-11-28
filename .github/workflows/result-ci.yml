@@ -1,0 +1,22 @@
+name: Result CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: 'Git branch/tag to build'
+        required: true
+        default: 'main'
+        type: string
+
+jobs:
+  result-ci:
+    uses: ./.github/workflows/instavote-ci.yml
+    with:
+      revision: ${{ inputs.revision }}
+      sparse_checkout_directories: '/result/'
+      image_name: 'result'
+      image_tag: ${{ github.sha }}
+    secrets:
+      registry_username: ${{ secrets.DOCKER_USERNAME }}
+      registry_password: ${{ secrets.DOCKER_PASSWORD }}
