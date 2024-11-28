@@ -42,7 +42,11 @@ jobs:
       - name: Generate timestamp
         id: timestamp
         run: echo "timestamp=$(date +%s)" >> $GITHUB_OUTPUT
-        
+
+      - name: Generate short sha
+        id: short_sha
+        run: echo "short_sha=$(echo $GITHUB_SHA | cut -c1-8)" >> $GITHUB_OUTPUT
+
       - name: Login to Docker Registry
         uses: docker/login-action@v3
         with:
@@ -58,6 +62,6 @@ jobs:
           context: ${{ inputs.sparse_checkout_directories }}
           push: true
           tags: |
-            ${{ secrets.registry_username }}/${{ inputs.image_name }}:${{ github.ref_name }}-${{ inputs.image_tag }}-${{ steps.timestamp.outputs.timestamp }}
+            ${{ secrets.registry_username }}/${{ inputs.image_name }}:${{ github.ref_name }}-${{ steps.short_sha.outputs.short_sha }}-${{ steps.timestamp.outputs.timestamp }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
