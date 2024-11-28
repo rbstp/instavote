@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/instavote-ci.yml
     with:
       revision: ${{ inputs.revision }}
-      sparse_checkout_directories: '/result/'
+      sparse_checkout_directories: 'result/'
       image_name: 'result'
       image_tag: ${{ github.sha }}
     secrets:
