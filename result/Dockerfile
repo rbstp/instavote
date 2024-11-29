@@ -1,18 +1,31 @@
 FROM node:8.9-alpine
 
-RUN mkdir -p /app
+# Set ENV variables
+ENV PORT=80
+ENV NPM_CONFIG_PREFIX=/app/.npm-global
+
+# Create app directory and set permissions
+RUN mkdir -p /app /app/.npm-global && \
+  chown -R node:node /app
+
 WORKDIR /app
 
-RUN npm install -g nodemon
-RUN npm config set registry https://registry.npmjs.org
-COPY package.json /app/package.json
-RUN npm install \
- && npm ls \
- && npm cache clean --force \
- && mv /app/node_modules /node_modules
-COPY . /app
+# Switch to non-root user
+USER node
 
-ENV PORT 80
+# Install global packages
+RUN npm config set registry https://registry.npmjs.org && \
+  npm install -g nodemon
+
+# Install dependencies
+COPY --chown=node:node package*.json ./
+RUN npm install && \
+  npm ls && \
+  npm cache clean --force
+
+# Copy app source
+COPY --chown=node:node . .
+
 EXPOSE 80
 
 CMD ["node", "server.js"]
