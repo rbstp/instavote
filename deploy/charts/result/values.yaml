@@ -7,7 +7,7 @@ image:
   repository: rboisvert/result
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 'main-92c7153d-1732768851' # {"$imagepolicy": "flux-system:result:tag"}
+  tag: 'main-94bccd0b-1732853402' # {"$imagepolicy": "flux-system:result:tag"}
 imagePullSecrets: []
 nameOverride: ''
 fullnameOverride: ''
