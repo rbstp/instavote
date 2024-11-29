@@ -11,5 +11,5 @@ spec:
   template:
     spec:
       containers:
-        - image: schoolofdevops/vote:v5 # {"$imagepolicy": "flux-system:vote"}
+        - image: rboisvert/vote:main-92c7153d-1732768867 # {"$imagepolicy": "flux-system:vote"}
           name: vote
